@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { Camera } from 'expo-camera';
+
+var experience = 0;
 
 // CustomButton component
 const CustomButton = ({ title, onPress }) => (
@@ -13,6 +15,12 @@ const CustomButton = ({ title, onPress }) => (
 // App component
 export default function App() {
   const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const cameraRef = useRef(null); // Create a ref for the camera
+  const [markerCoords, setMarkerCoords] = useState(null);
+
+  const addMarker = (coordinate) => {
+    setMarkerCoords(coordinate);
+  };
 
   const openCamera = () => {
     setIsCameraOpen(true);
@@ -22,21 +30,24 @@ export default function App() {
     setIsCameraOpen(false);
   };
 
-  const takePicture = async (camera) => {
-    if (camera) {
+  const takePicture = async () => {
+    if (cameraRef.current) { // Check if cameraRef is available
       const options = { quality: 0.5, base64: true };
-      const data = await camera.takePictureAsync(options);
+      const data = await cameraRef.current.takePictureAsync(options);
       console.log(data.uri);
+      experience++;
+      closeCamera();
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>TrashTag</Text>
+      <Text style={styles.experience}>User experience: {experience}</Text>
       <View style={styles.contentContainer}>
         {isCameraOpen ? (
-          <Camera style={styles.camera} type={Camera.Constants.Type.back}>
-            <TouchableOpacity style={styles.cameraButton} onPress={() => takePicture()}>
+          <Camera style={styles.camera} type={Camera.Constants.Type.back} ref={cameraRef}>
+            <TouchableOpacity style={styles.cameraButton} onPress={takePicture}>
               <Text style={styles.cameraButtonText}>Take Picture</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.cameraCloseButton} onPress={closeCamera}>
@@ -47,13 +58,20 @@ export default function App() {
           <>
             <MapView
               style={styles.map}
+              showsUserLocation = {true}
+              followsUserLocation = {true}
               initialRegion={{
                 latitude: 29.651634,
                 longitude: -82.324829,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
               }}
-            />
+              onPress={(event) => addMarker(event.nativeEvent.coordinate)}
+            >
+              {markerCoords && (
+                <Marker coordinate={markerCoords} title="Selected Location" />
+              )}
+            </MapView>
             <CustomButton title="Open Camera" onPress={openCamera} />
           </>
         )}
@@ -85,7 +103,7 @@ const styles = StyleSheet.create({
     paddingTop: 20, // Adjust top padding
   },
   map: {
-    width: '80%',
+    width: '100%',
     height: '60%',
   },
   button: {

@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "expo": "^50.0.6"
+    "expo": "^50.0.6",
+    "metro-cache": "^0.80.5",
+    "react-native": "^0.73.4"
   }
 }

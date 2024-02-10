@@ -32,7 +32,7 @@ export default function App() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        />
+        >
 
       {showMarker &&<Marker
         coordinate={{
@@ -42,7 +42,7 @@ export default function App() {
         title = "gainesville :)"
         description = "lol"
       />}
-
+    </MapView>
       
     </View>
   );

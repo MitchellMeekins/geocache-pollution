@@ -8,11 +8,10 @@
  * @flow strict-local
  */
 
-import type {
-  EventSubscription,
-  IEventEmitter,
+import {
+  type EventSubscription,
+  type IEventEmitter,
 } from '../../vendor/emitter/EventEmitter';
-
 import RCTDeviceEventEmitter from '../RCTDeviceEventEmitter';
 
 /**

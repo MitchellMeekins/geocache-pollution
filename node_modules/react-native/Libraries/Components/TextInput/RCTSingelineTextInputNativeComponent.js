@@ -8,15 +8,11 @@
  * @format
  */
 
-import type {
-  HostComponent,
-  PartialViewConfig,
-} from '../../Renderer/shims/ReactNativeTypes';
-import type {TextInputNativeCommands} from './TextInputNativeCommands';
-
-import * as NativeComponentRegistry from '../../NativeComponent/NativeComponentRegistry';
+import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import codegenNativeCommands from '../../Utilities/codegenNativeCommands';
+import type {TextInputNativeCommands} from './TextInputNativeCommands';
 import RCTTextInputViewConfig from './RCTTextInputViewConfig';
+import * as NativeComponentRegistry from '../../NativeComponent/NativeComponentRegistry';
 
 type NativeType = HostComponent<mixed>;
 
@@ -26,16 +22,11 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
   supportedCommands: ['focus', 'blur', 'setTextAndSelection'],
 });
 
-export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
-  uiViewClassName: 'RCTSinglelineTextInputView',
-  ...RCTTextInputViewConfig,
-};
-
 const SinglelineTextInputNativeComponent: HostComponent<mixed> =
-  NativeComponentRegistry.get<mixed>(
-    'RCTSinglelineTextInputView',
-    () => __INTERNAL_VIEW_CONFIG,
-  );
+  NativeComponentRegistry.get<mixed>('RCTSinglelineTextInputView', () => ({
+    uiViewClassName: 'RCTSinglelineTextInputView',
+    ...RCTTextInputViewConfig,
+  }));
 
 // flowlint-next-line unclear-type:off
 export default ((SinglelineTextInputNativeComponent: any): HostComponent<mixed>);

@@ -9,7 +9,6 @@
  */
 
 import type {TurboModule} from '../TurboModule/RCTExport';
-
 import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
 
 export interface Spec extends TurboModule {
@@ -48,7 +47,6 @@ export interface Spec extends TurboModule {
     |}) => void,
     successCallback: (completed: boolean, activityType: ?string) => void,
   ) => void;
-  +dismissActionSheet?: () => void;
 }
 
 export default (TurboModuleRegistry.get<Spec>('ActionSheetManager'): ?Spec);

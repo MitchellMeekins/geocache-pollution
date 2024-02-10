@@ -8,15 +8,11 @@
  * @format
  */
 
-import type {
-  HostComponent,
-  PartialViewConfig,
-} from '../../Renderer/shims/ReactNativeTypes';
-import type {TextInputNativeCommands} from './TextInputNativeCommands';
-
-import * as NativeComponentRegistry from '../../NativeComponent/NativeComponentRegistry';
+import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import codegenNativeCommands from '../../Utilities/codegenNativeCommands';
+import type {TextInputNativeCommands} from './TextInputNativeCommands';
 import RCTTextInputViewConfig from './RCTTextInputViewConfig';
+import * as NativeComponentRegistry from '../../NativeComponent/NativeComponentRegistry';
 
 type NativeType = HostComponent<mixed>;
 
@@ -26,20 +22,15 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
   supportedCommands: ['focus', 'blur', 'setTextAndSelection'],
 });
 
-export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
-  uiViewClassName: 'RCTMultilineTextInputView',
-  ...RCTTextInputViewConfig,
-  validAttributes: {
-    ...RCTTextInputViewConfig.validAttributes,
-    dataDetectorTypes: true,
-  },
-};
-
 const MultilineTextInputNativeComponent: HostComponent<mixed> =
-  NativeComponentRegistry.get<mixed>(
-    'RCTMultilineTextInputView',
-    () => __INTERNAL_VIEW_CONFIG,
-  );
+  NativeComponentRegistry.get<mixed>('RCTMultilineTextInputView', () => ({
+    uiViewClassName: 'RCTMultilineTextInputView',
+    ...RCTTextInputViewConfig,
+    validAttributes: {
+      ...RCTTextInputViewConfig.validAttributes,
+      dataDetectorTypes: true,
+    },
+  }));
 
 // flowlint-next-line unclear-type:off
 export default ((MultilineTextInputNativeComponent: any): HostComponent<mixed>);

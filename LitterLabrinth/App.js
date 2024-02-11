@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Camera } from 'expo-camera';
 import * as Location from 'expo-location';
+import { useFonts } from 'expo-font';
+
 
 var experience = 0;
 var trashDensityText = "Low";
@@ -24,7 +26,7 @@ export default function App() {
   const cameraRef = useRef(null); // Create a ref for the camera
   const [markerCoords, setMarkerCoords] = useState(null);
   const [location, setLocation] = useState(null);
-  const [showMarker, setShowMarker] = useState(false);
+  const [showMarker, setShowMarker] = useState(true);
 
   const addMarker = (coordinate) => {
     if(coordinate.longitude > -82.34469 && coordinate.longitude < -82.34440)
@@ -94,7 +96,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>TrashTag</Text>
-      <Text style={styles.experience}>User experience: {experience}</Text>
+      <Text style={styles.experience}>User points: {experience}</Text>
       <Text style={styles.trashDensity}>{densityText}</Text>
       <Text style={styles.trashDensityTextT}>{trashDensityText} trash density area!</Text>
       <View style={styles.contentContainer}>
@@ -223,5 +225,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginTop: 0,
     marginBottom: 0
+  },
+  experience:
+  {
+    fontSize: 30
   },
 });

@@ -169,14 +169,14 @@ const styles = StyleSheet.create({
   map: {
     marginTop: 10,
     width: '100%',
-    height: '70%',
+    height: '80%',
   },
   button: {
     backgroundColor: '#4CAF50',
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginTop: 20,
+    marginTop: 5,
   },
   buttonText: {
     color: 'white',
